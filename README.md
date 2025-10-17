@@ -4,7 +4,7 @@ funtionality will be put in there in (Either with python or Java, well have to w
 
 Check out the WIKI for more detailed crazy talk.
 
-Code used (or to e sued in this case)
+Code used (or to be used in this case)
 + MySQL
 + Java
 + Python

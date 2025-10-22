@@ -2,10 +2,10 @@
 Electronic Health Records build, primarily starting with the database schema build and then the GUI with 
 funtionality will be put in there in (Either with python or Java, well have to wait and see what the gods have to say about that.
 
-Check out the WIKI for more detailed crazy talk.
+Check out the WIKI for more detailed description.
 
 Code used (or to be used in this case)
-+ MySQL
++ SQL Server
 + Java
 + Python
 

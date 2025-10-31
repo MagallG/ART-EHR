@@ -1,0 +1,4 @@
+kivy
+pyodbc
+matplotlib
+flask

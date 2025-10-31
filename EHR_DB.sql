@@ -69,11 +69,12 @@ CREATE table Med_history(
 -- Staff Information table
 ------------------ to have a default, be able to add and update users, and linked to login. To start the UI, a user has
 create table Staff(
-  Staff_ID varchar(6) PRIMARY KEY,
-  Surname varchar(50) NOT NULL,
-  other_name varchar(50) NOT NULL,
-  login_password varchar(50) NOT NULL,
-  Department varchar(50) CHECK(Department IN ('Records','ART', 'Counselling', 'Lab', 'Maternity', 'OPD', 'Ward')) NOT NULL,
+	Staff_ID varchar(6) PRIMARY KEY,
+	Surname varchar(50) NOT NULL,
+	other_name varchar(50) NOT NULL,
+	Username varchar(50) NOT NULL,
+	loginPassword varchar(50) not null,
+	Department varchar(50) CHECK(Department IN ('Records','ART', 'Counselling', 'Lab', 'Maternity', 'OPD', 'Ward')) NOT NULL,
   
   -- Constraints 
   CHECK (Staff_ID LIKE '[A-Z][A-Z][A-Z][0-9][0-9][0-9]')  -- Staff ids to be of the format 'LAB001', 'OPD111', 'MAT001' and 'WRD001'
@@ -333,3 +334,6 @@ GROUP BY FORMAT(Date_Registered, 'yyyy-MM');
 ------------------------ END ------------------------
 --- NOTE: Views and data analysis to be added upon testing
 --- to ease data extraction.
+
+INSERT INTO Staff (Staff_ID, Surname, other_name, Username, loginPassword, Department)
+VALUES ('REC001', 'Default', 'Admin', 'admin', 'admin123', 'Records');

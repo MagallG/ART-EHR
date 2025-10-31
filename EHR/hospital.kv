@@ -1,0 +1,499 @@
+#:kivy 2.1.0
+
+<RootScreenManager>:
+    LoginScreen:
+    PatientsScreen:
+    VisitsScreen:
+    LabsScreen:
+    CounsellingScreen:
+    AnalyticsScreen:
+
+# ---------------- LOGIN ----------------
+<LoginScreen@Screen>:
+    name: 'login'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 30
+        spacing: 20
+
+        Label:
+            text: 'Hospital EHR Login'
+            font_size: '22sp'
+            bold: True
+            size_hint_y: None
+            height: 60
+
+        GridLayout:
+            cols: 2
+            spacing: 10
+            row_default_height: 40
+            size_hint_y: None
+            height: self.minimum_height
+
+            Label:
+                text: 'Staff ID'
+                halign: 'right'
+                valign: 'middle'
+                text_size: self.size
+            TextInput:
+                id: staff_id
+                multiline: False
+
+            Label:
+                text: 'Password'
+                halign: 'right'
+                valign: 'middle'
+                text_size: self.size
+            TextInput:
+                id: staff_pwd
+                password: True
+                multiline: False
+
+        Button:
+            text: 'Login'
+            size_hint_y: None
+            height: 50
+            on_release: app.login(staff_id.text.strip(), staff_pwd.text)
+
+        Label:
+            text: app.status_message
+            size_hint_y: None
+            height: 30
+
+
+# ---------------- NAVIGATION BAR ----------------
+<NavBar@BoxLayout>:
+    size_hint_y: None
+    height: 50
+    spacing: 8
+    padding: [10, 0]
+    canvas.before:
+        Color:
+            rgba: 0.1, 0.4, 0.6, 1
+        RoundedRectangle:
+            radius: [0, 0, 10, 10]
+            pos: self.pos
+            size: self.size
+    Button:
+        text: 'Patients'
+        on_release: root.parent.parent.manager.current = 'patients'
+    Button:
+        text: 'Visits'
+        on_release: root.parent.parent.manager.current = 'visits'
+    Button:
+        text: 'Labs'
+        on_release: root.parent.parent.manager.current = 'labs'
+    Button:
+        text: 'Counselling'
+        on_release: root.parent.parent.manager.current = 'counselling'
+    Button:
+        text: 'Analytics'
+        on_release: root.parent.parent.manager.current = 'analytics'
+    Button:
+        text: 'Logout'
+        on_release: root.parent.parent.manager.current = 'login'
+
+
+# ---------------- PATIENTS SCREEN ----------------
+<PatientsScreen@Screen>:
+    name: 'patients'
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 10
+        padding: 15
+
+        NavBar:
+
+        Label:
+            text: 'Patient Registration'
+            font_size: '20sp'
+            bold: True
+            size_hint_y: None
+            height: 40
+
+        ScrollView:
+            do_scroll_x: False
+            GridLayout:
+                cols: 2
+                spacing: 10
+                padding: 10
+                size_hint_y: None
+                height: self.minimum_height
+                row_default_height: 42
+                row_force_default: True
+
+                Label:
+                    text: 'Patient ID'
+                TextInput:
+                    id: pid
+                    multiline: False
+
+                Label:
+                    text: 'Surname'
+                TextInput:
+                    id: sname
+                    multiline: False
+
+                Label:
+                    text: 'Other Name'
+                TextInput:
+                    id: oname
+                    multiline: False
+
+                Label:
+                    text: 'Gender'
+                TextInput:
+                    id: gender
+                    multiline: False
+
+                Label:
+                    text: 'DOB (YYYY-MM-DD)'
+                TextInput:
+                    id: dob
+                    multiline: False
+
+                Label:
+                    text: 'Nationality'
+                TextInput:
+                    id: nat
+                    multiline: False
+
+                Label:
+                    text: 'Contact'
+                TextInput:
+                    id: contact
+                    multiline: False
+
+                Label:
+                    text: 'NIN'
+                TextInput:
+                    id: nin
+                    multiline: False
+
+                Label:
+                    text: 'NOK'
+                TextInput:
+                    id: nok
+                    multiline: False
+
+                Label:
+                    text: 'NOK Contact'
+                TextInput:
+                    id: nokc
+                    multiline: False
+
+        BoxLayout:
+            size_hint_y: None
+            height: 60
+            spacing: 10
+            padding: [0, 10]
+
+            Button:
+                text: 'Add'
+                on_release: app.add_patient({'Patient_ID': pid.text, 'Sur_name': sname.text, 'Other_name': oname.text,'Gender': gender.text, 'DOB': dob.text, 'Nationality': nat.text, 'Address': '', 'Contact': contact.text, 'NIN': nin.text, 'NOK': nok.text, 'NOK_Contact': nokc.text})
+            Button:
+                text: 'Update'
+                on_release: app.update_patient(pid.text, {'Sur_name': sname.text, 'Other_name': oname.text, 'Gender': gender.text, 'DOB': dob.text,'Nationality': nat.text, 'Address': '', 'Contact': contact.text, 'NIN': nin.text, 'NOK': nok.text, 'NOK_Contact': nokc.text})
+            Button:
+                text: 'Delete'
+                on_release: app.delete_patient(pid.text)
+            Button:
+                text: 'Refresh'
+                on_release: app.refresh_patients()
+
+        Label:
+            text: app.status_message
+            size_hint_y: None
+            height: 30
+
+        ScrollView:
+            RecycleView:
+                id: rv_patients
+                viewclass: 'Label'
+                RecycleBoxLayout:
+                    orientation: 'vertical'
+                    default_size: None, 40
+                    default_size_hint: 1, None
+                    size_hint_y: None
+                    height: self.minimum_height
+
+
+# ---------------- VISITS SCREEN ----------------
+<VisitsScreen@Screen>:
+    name: 'visits'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 15
+        spacing: 10
+
+        NavBar:
+
+        Label:
+            text: 'Visit Records'
+            font_size: '20sp'
+            bold: True
+            size_hint_y: None
+            height: 40
+
+        ScrollView:
+            do_scroll_x: False
+            GridLayout:
+                cols: 2
+                spacing: 10
+                padding: 10
+                size_hint_y: None
+                height: self.minimum_height
+
+                Label:
+                    text: 'Patient ID'
+                TextInput:
+                    id: v_pid
+                    multiline: False
+
+                Label:
+                    text: 'Staff ID'
+                TextInput:
+                    id: v_staff
+                    multiline: False
+
+                Label:
+                    text: 'Date (YYYY-MM-DD)'
+                TextInput:
+                    id: v_date
+                    multiline: False
+
+                Label:
+                    text: 'ART Adherence'
+                TextInput:
+                    id: v_adherence
+                    multiline: False
+
+                Label:
+                    text: 'Refilled (YES/NO)'
+                TextInput:
+                    id: v_refilled
+                    multiline: False
+
+                Label:
+                    text: 'Notes'
+                TextInput:
+                    id: v_notes
+                    multiline: False
+
+        BoxLayout:
+            size_hint_y: None
+            height: 60
+            spacing: 10
+            Button:
+                text: 'Add Visit'
+                on_release:
+                    app.visits.add_visit({'Patient_ID': v_pid.text, 'Staff_ID': v_staff.text, 'Date_of_Visit': v_date.text, 'ART_Adherence': v_adherence.text,'Refilled': v_refilled.text, 'Clinical_notes': v_notes.text})
+            Button:
+                text: 'Back'
+                on_release: root.manager.current = 'patients'
+
+
+# ---------------- LABS SCREEN ----------------
+<LabsScreen@Screen>:
+    name: 'labs'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 15
+        spacing: 10
+
+        NavBar:
+
+        Label:
+            text: 'Laboratory Records'
+            font_size: '20sp'
+            bold: True
+            size_hint_y: None
+            height: 40
+
+        ScrollView:
+            do_scroll_x: False
+            GridLayout:
+                cols: 2
+                spacing: 10
+                padding: 10
+                size_hint_y: None
+                height: self.minimum_height
+
+                Label:
+                    text: 'Lab No'
+                TextInput:
+                    id: lab_no
+                    multiline: False
+                    readonly: True
+
+                Label:
+                    text: 'Patient ID'
+                TextInput:
+                    id: l_pid
+                    multiline: False
+
+                Label:
+                    text: 'Test Ordered'
+                TextInput:
+                    id: test_ordered
+                    multiline: False
+
+                Label:
+                    text: 'Sample Taken (Yes/No)'
+                TextInput:
+                    id: sample_taken
+                    multiline: False
+
+                Label:
+                    text: 'Result'
+                TextInput:
+                    id: result
+                    multiline: False
+
+                Label:
+                    text: 'Reason not bled'
+                TextInput:
+                    id: reason_not_bled
+                    multiline: False
+
+        BoxLayout:
+            size_hint_y: None
+            height: 60
+            spacing: 10
+            Button:
+                text: 'Add'
+                on_release: app.labs.add_lab({'Patient_ID': l_pid.text, 'Test_Ordered': test_ordered.text, 'Sample_taken': sample_taken.text, 'Result': result.text, 'Reason_not_bled': reason_not_bled.text})
+            Button:
+                text: 'Update'
+                on_release: app.labs.update_lab(lab_no.text, {'Patient_ID': l_pid.text, 'Test_Ordered': test_ordered.text, 'Sample_taken': sample_taken.text, 'Result': result.text, 'Reason_not_bled': reason_not_bled.text})
+            Button:
+                text: 'Delete'
+                on_release: app.labs.delete_lab(lab_no.text)
+            Button:
+                text: 'Back'
+                on_release: root.manager.current = 'patients'
+
+
+# ---------------- COUNSELLING SCREEN ----------------
+<CounsellingScreen@Screen>:
+    name: 'counselling'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 15
+        spacing: 10
+
+        NavBar:
+
+        Label:
+            text: 'Counselling Records'
+            font_size: '20sp'
+            bold: True
+            size_hint_y: None
+            height: 40
+
+        ScrollView:
+            do_scroll_x: False
+            GridLayout:
+                cols: 2
+                spacing: 10
+                padding: 10
+                size_hint_y: None
+                height: self.minimum_height
+
+                Label:
+                    text: 'Councel No'
+                TextInput:
+                    id: councel_no
+                    multiline: False
+                    readonly: True
+
+                Label:
+                    text: 'Patient ID'
+                TextInput:
+                    id: c_pid
+                    multiline: False
+
+                Label:
+                    text: 'Reason for Counselling'
+                TextInput:
+                    id: reason_fr_cnsl
+                    multiline: False
+
+                Label:
+                    text: 'Counselling Done (Yes/No)'
+                TextInput:
+                    id: counselling_done
+                    multiline: False
+
+                Label:
+                    text: 'Outcome if Yes'
+                TextInput:
+                    id: outcome_if_yes
+                    multiline: False
+
+                Label:
+                    text: 'Reason if No'
+                TextInput:
+                    id: reason_if_no
+                    multiline: False
+
+                Label:
+                    text: 'Next Appointment (YYYY-MM-DD)'
+                TextInput:
+                    id: next_appt
+                    multiline: False
+
+        BoxLayout:
+            size_hint_y: None
+            height: 60
+            spacing: 10
+            Button:
+                text: 'Add'
+                on_release: app.counselling.add_counselling({'Patient_ID': c_pid.text, 'Reason_fr_cnsl': reason_fr_cnsl.text, 'Councelling_done': counselling_done.text, 'Outcome_if_Yes': outcome_if_yes.text, 'Reason_if_No': reason_if_no.text, 'Next_Appointment': next_appt.text})
+            Button:
+                text: 'Update'
+                on_release: app.counselling.update_counselling(councel_no.text, {'Patient_ID': c_pid.text, 'Reason_fr_cnsl': reason_fr_cnsl.text, 'Councelling_done': counselling_done.text, 'Outcome_if_Yes': outcome_if_yes.text, 'Reason_if_No': reason_if_no.text, 'Next_Appointment': next_appt.text})
+            Button:
+                text: 'Delete'
+                on_release: app.counselling.delete_counselling(councel_no.text)
+            Button:
+                text: 'Back'
+                on_release: root.manager.current = 'patients'
+
+
+# ---------------- ANALYTICS SCREEN ----------------
+<AnalyticsScreen@Screen>:
+    name: 'analytics'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 15
+        spacing: 10
+
+        NavBar:
+
+        Label:
+            text: 'Analytics Dashboard'
+            font_size: '20sp'
+            bold: True
+            size_hint_y: None
+            height: 40
+
+        BoxLayout:
+            size_hint_y: None
+            height: 60
+            spacing: 10
+            Button:
+                text: 'Load Monthly VL'
+                on_release: app.load_monthly_vl()
+            Button:
+                text: 'Export Monthly VL CSV'
+                on_release: app.export_monthly_vl_csv('monthly_vl.csv')
+
+        ScrollView:
+            GridLayout:
+                id: analytics_list
+                cols: 1
+                spacing: 5
+                size_hint_y: None
+                height: self.minimum_height
+                row_default_height: 30

@@ -6,7 +6,7 @@ Check out the WIKI for more detailed description.
 
 Code used (or to be used in this case)
 + SQL Server
-+ Java
++ Kivy
 + Python
 
 If you see any good in it, feel free to fork the hell out of it...would make me please to know I added some value to the world.
